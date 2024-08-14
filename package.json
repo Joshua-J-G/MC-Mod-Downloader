@@ -1,0 +1,26 @@
+{
+  "name": "modpack-compiler",
+  "version": "1.0.0",
+  "description": "A program to download and compile mods thats better than the alternatives",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"please fix me\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joshua-J-G/MC-Mod-Downloader.git"
+  },
+  "keywords": [
+    "Minecraft",
+    "Mods",
+    "Modpacks",
+    "ModpackCompiler"
+  ],
+  "author": "Joshua Gessner",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Joshua-J-G/MC-Mod-Downloader/issues"
+  },
+  "homepage": "https://github.com/Joshua-J-G/MC-Mod-Downloader#readme"
+}
