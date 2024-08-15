@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/Joshua-J-G/MC-Mod-Downloader/issues"
   },
-  "homepage": "https://github.com/Joshua-J-G/MC-Mod-Downloader#readme"
+  "homepage": "https://github.com/Joshua-J-G/MC-Mod-Downloader#readme",
+  "dependencies": {
+    "electron": "^31.4.0"
+  }
 }
