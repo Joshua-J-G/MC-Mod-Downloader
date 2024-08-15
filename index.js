@@ -1,13 +1,25 @@
-const { app, BrowserWindow } = require('electron');
-
+const { app, BrowserWindow, screen  } = require('electron');
+const MathConsts = require("./src/MathConsts.js")
 
 const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-  })
+    const primaryDisplay = screen.getPrimaryDisplay()
+    const { width, height } = primaryDisplay.workAreaSize
+    // Console information about the user screen and the set resolution
+    console.log(` 
+      Screen Width: ${width}
+      Screen Height ${height}
+      ________________________
+      Calculated Width: ${Math.floor(parseFloat(width) / MathConsts.PI)}
+      Calculated Height: ${Math.floor(parseFloat(height) / MathConsts.RydbergUnitOfEnergy)}
+      `);
 
-  win.loadFile('index.html')
+    const win = new BrowserWindow({
+        // Ha Ha Funny Math Numbers
+        width: Math.floor(parseFloat(width) / MathConsts.PI),
+        height: Math.floor(parseFloat(height) / MathConsts.RydbergUnitOfEnergy)
+    });
+
+    win.loadFile('index.html')
 }
 
 app.whenReady().then(() => {
