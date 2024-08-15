@@ -3,7 +3,7 @@ const MathConsts = require("./src/MathConsts.js")
 
 const createWindow = () => {
     const primaryDisplay = screen.getPrimaryDisplay()
-    const { width, height } = primaryDisplay.workAreaSize
+    const { width, height } = primaryDisplay.size
     // Console information about the user screen and the set resolution
     console.log(` 
       Screen Width: ${width}
