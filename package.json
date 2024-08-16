@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Joshua-J-G/MC-Mod-Downloader#readme",
   "dependencies": {
-    "electron": "^31.4.0"
+    "electron": "^31.4.0",
+    "exifreader": "^4.23.3"
   }
 }
