@@ -1,7 +1,7 @@
 const userConfigs = {
-    
-    test: "hello",
-    newtest: "super hello"
+    theme: "Test File",
+    Darkmode: false,
+    systemDefault: false
 };
 
 

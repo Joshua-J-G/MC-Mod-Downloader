@@ -1,6 +1,6 @@
-const { app, BrowserWindow, screen, Notification   } = require('electron');
+const {app, screen, BrowserWindow, Notification} = require('electron');
 const Configs = require('./src/ConfigFileTemplates');
-const fs = require('fs');
+const fs =  require('fs');
 const ThemeFile = require('./src/ThemeFile');
 
 const WidthMin = 900;
@@ -28,7 +28,22 @@ const createWindow = () => {
         frame: true
     });
     
-    win.loadFile('index.html');
+    const themes = ThemeFile.ReadThemeFile();
+    const currentTheme = themes.find((data) => data.ThemeName == UserConfigs.theme);
+
+    //console.log(`Themes/${currentTheme.Folder}/Dark-${currentTheme.ThemeName}/intro.html`);
+    if(currentTheme.Darkmode){
+      if(UserConfigs.Darkmode){
+        win.loadFile(`Themes/${currentTheme.Folder}/Dark-${currentTheme.ThemeName}/intro.html`);
+      }else{
+        win.loadFile(`Themes/${currentTheme.Folder}/Light-${currentTheme.ThemeName}/intro.html`);
+      }
+    }else{
+      win.loadFile(`Themes/${currentTheme.Folder}/${currentTheme.ThemeName}/intro.html`);
+    }
+
+
+   
 }
 
 const LoadConfig = () => {
@@ -60,6 +75,8 @@ const LoadConfig = () => {
     UserConfigs = Configs.userConfigs;
   }
 
+  
+
   console.log(UserConfigs);
 }
 
@@ -69,10 +86,10 @@ const LoadConfig = () => {
 app.whenReady().then(async () => {
   LoadConfig();
   createWindow();
-  ThemeFile.constructor("Test File", "This is A Test Description For Your Enjoyment Have Fun", true, false, "URL WE DONT NEED NO URL WHERE WERE GOING");
-  await ThemeFile.SelectIcon();
+  //ThemeFile.constructor("Test File", "This is A Test Description For Your Enjoyment Have Fun", true, false, "URL WE DONT NEED NO URL WHERE WERE GOING");
+  //await ThemeFile.SelectIcon();
 
-  ThemeFile.CreateThemeFile();
+  //ThemeFile.CreateThemeFile();
   
 })
 
