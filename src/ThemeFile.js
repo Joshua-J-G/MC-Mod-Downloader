@@ -58,7 +58,7 @@ async function SelectIcon(){
         const Base64Image = Buffer.from(file, 'binary').toString('base64');
 
         const base64ImageStr = `data:image/${extentionName.split('.').pop()};base64,${Base64Image}`;
-        // console.log(base64ImageStr);
+        //console.log(base64ImageStr);
         ThemeIcon = base64ImageStr;
         //console.log(ThemeIcon);
         //this.ThemeIcon = base64ImageStr;
@@ -80,7 +80,7 @@ async function CreateThemeFile () {
     const SaveSpot = dialog.showOpenDialogSync({title: 'Select Theme Development Enviroment Location', properties: ['openDirectory', 'createDirectory']});
     console.log(SaveSpot);
     try { 
-        let data = fs.createWriteStream(`${SaveSpot}/${this.ThemeName}.theme`);
+        let data = fs.createWriteStream(`${SaveSpot[0]}/${this.ThemeName}.skin`);
         data.write(MAGICNUMBER);
         data.write(ThemeIcon);
         data.write(this.ThemeName);
@@ -89,6 +89,31 @@ async function CreateThemeFile () {
         data.write(booleanToBits(this.OnlineUpdate));
         data.write(this.Url);
         console.log("Finished Writing File");
+
+        if(this.Darkmode){
+            fs.mkdirSync(`${SaveSpot[0]}/Dark-${this.ThemeName}`, {recursive: true});
+            fs.mkdirSync(`${SaveSpot[0]}/Light-${this.ThemeName}`, {recursive: true});
+
+            fs.mkdirSync(`${SaveSpot[0]}/res`, {recursive: true});
+            // Create Dark Mode Files
+            fs.writeFileSync(`${SaveSpot[0]}/Dark-${this.ThemeName}/into.html`, "");
+            fs.writeFileSync(`${SaveSpot[0]}/Dark-${this.ThemeName}/into.css`, "");
+            fs.writeFileSync(`${SaveSpot[0]}/Dark-${this.ThemeName}/into.js`, "");
+
+            // Create Light Mode Files
+            fs.writeFileSync(`${SaveSpot[0]}/Light-${this.ThemeName}/into.html`, "");
+            fs.writeFileSync(`${SaveSpot[0]}/Light-${this.ThemeName}/into.css`, "");
+            fs.writeFileSync(`${SaveSpot[0]}/Light-${this.ThemeName}/into.js`, "");
+
+        }else{
+            fs.mkdirSync(`${SaveSpot[0]}/${this.ThemeName}`, {recursive: true});
+
+            fs.mkdirSync(`${SaveSpot[0]}/res`, {recursive: true});
+
+            fs.writeFileSync(`${SaveSpot[0]}/${this.ThemeName}/into.html`, "");
+            fs.writeFileSync(`${SaveSpot[0]}/${this.ThemeName}/into.css`, "");
+            fs.writeFileSync(`${SaveSpot[0]}/${this.ThemeName}/into.js`, "");
+        }
     }catch(e) { 
         dialog.showErrorBox(
             'File Failed to Create',
@@ -97,6 +122,9 @@ async function CreateThemeFile () {
     }
 }
 
+async function ReadThemeFile() {
+
+}
 
 
 function booleanToBits(val){
