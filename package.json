@@ -26,5 +26,9 @@
   "dependencies": {
     "electron": "^31.4.0",
     "exifreader": "^4.23.3"
+  },
+  "devDependencies": {
+    "@electron/packager": "^18.3.3",
+    "electron-packager": "^17.1.2"
   }
 }
