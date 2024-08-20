@@ -1,0 +1,28 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+@font-face {
+    font-family: "Josefin Sans";
+    src: url("../../res/Fonts/JosefinSans/JosefinSans-Regular.ttf");
+}
+
+body {
+    font-family:"Josefin Sans";
+    color: #1c1c1c;
+    background-color: #fff9ec;
+}
+html, body {margin: 0; height: 100%; overflow: hidden}
+.sidebar {
+    width: 15%;
+    height: auto;
+    transition: all 0.5s;
+    transition-timing-function: ease-in(20);
+    transform-origin: 50% 50%;
+    position: absolute;
+}
+
+
+.sidebar:hover{
+    transform: scaleX(1.2);
+}

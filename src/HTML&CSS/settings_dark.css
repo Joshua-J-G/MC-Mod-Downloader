@@ -1,0 +1,98 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+@font-face {
+    font-family: "Josefin Sans";
+    src: url("../../res/Fonts/JosefinSans/JosefinSans-Regular.ttf");
+}
+
+@font-face{
+    font-family: "New Amsterdam";
+    src: url("../../res/Fonts/NewAmsterdam/NewAmsterdam-Regular.ttf");
+}
+
+body {
+    font-family:"Josefin Sans";
+    color: #fff9ec;
+    background-color: #1c1c1c;
+}
+html, body {margin: 0; height: 100%; overflow: hidden}
+
+.sidebar {
+    width: 15%;
+    height: auto;
+    transition: all 0.5s;
+    transition-timing-function: ease-in(20);
+    transform-origin: 50% 50%;
+    position: absolute;
+}
+
+
+.sidebar:hover{
+    transform: scaleX(1.2);
+}
+
+.icon {
+    position: absolute;
+    border-radius: 10%;
+    transform: translateY(19px);
+    left: 3%;
+    width: 15%;
+    height: auto;
+}
+
+.title {
+    position: absolute;
+    color: #fff9ec;
+    left: 20%;
+}
+
+.desc {
+    position: absolute;
+    color: #fff9ec;
+    left: 20%;
+    transform: translateY(50px);
+    right: 20%;
+}
+
+.enableButton{
+    position: absolute;
+    width: 15%;
+    height: auto;
+    right: 0%;
+}
+
+.deleteButton{
+    position: absolute;
+    width: 15%;
+    height: auto;
+    right: 0%;
+    transform: translateY(88px);
+    
+}
+
+.scrollbox {
+    
+    color: black;
+    height: 87%;
+    width: 78%;
+    right: 2%;
+    top: 6.5%;
+    border-radius: 45px;
+    overflow-y: scroll;
+    position:absolute;
+}
+
+button {
+    opacity: 0%;
+}
+
+button:active {
+    opacity: 20%;
+    background: #e5e5e5;
+    -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+       -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+            box-shadow: inset 0px 0px 5px #c1c1c1;
+     outline: none;
+  }

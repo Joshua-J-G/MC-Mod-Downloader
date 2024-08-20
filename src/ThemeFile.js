@@ -46,14 +46,14 @@ function constructor(ThemeName, Description, Darkmode, OnlineUpdate, Url){
 }
 
 async function SelectIcon(){
-    const fileLocation = dialog.showOpenDialogSync({title: 'Select Icon', properties: ['openFile'], filters: [ {name: 'Images', extensions: ['jpg', 'png']}]});
-    console.log(fileLocation);
+    const fileLocation = dialog.showOpenDialogSync({title: 'Select Icon', properties: ['openFile'], filters: [ {name: 'Images', extensions: ['jpg', 'png', 'gif']}]});
+   // console.log(fileLocation);
     try{
-        const file = await fs.readFileSync(fileLocation[0]);
+        const file = fs.readFileSync(fileLocation[0]);
         
 
         const tags = EXIF.load(file);
-        console.log(tags);
+        //console.log(tags);
             
         if(tags['Image Width'].value != ImageSize && tags['Image Height'].value != ImageSize){
             dialog.showErrorBox("Image Wrong Size", "the Icon Image must be 512x512 pixels in size");
@@ -63,7 +63,7 @@ async function SelectIcon(){
         const extentionName = path.extname(fileLocation[0]);
 
         const Base64Image = Buffer.from(file, 'binary').toString('base64');
-
+        
         const base64ImageStr = `data:image/${extentionName.split('.').pop()};base64,${Base64Image}`;
         //console.log(base64ImageStr);
         ThemeIcon = base64ImageStr;
@@ -92,8 +92,8 @@ async function CreateThemeFile () {
 
         
         data.write(encoder.encode(MAGICNUMBER));
-        let b = Buffer.alloc(2);
-        b.writeUInt16LE(ThemeIcon.length);
+        let b = Buffer.alloc(4);
+        b.writeUInt32LE(ThemeIcon.length);
         data.write(b);
         data.write(ThemeIcon);
         b = Buffer.alloc(2);
@@ -181,13 +181,13 @@ async function CreateThemeFile () {
 }
 
 function ReadThemeFile() {
-    let themesFolders = fs.readdirSync("./Themes");
+    let themesFolders = fs.readdirSync(`${__dirname}/../Themes`);
 
     let themesData = [];
     for(const theme of themesFolders){
         try{
-            if(fs.existsSync(`./Themes/${theme}/metadata.skin`)){
-                const filestream = fs.readFileSync(`./Themes/${theme}/metadata.skin`);
+            if(fs.existsSync(`${__dirname}/../Themes/${theme}/metadata.skin`)){
+                const filestream = fs.readFileSync(`${__dirname}/../Themes/${theme}/metadata.skin`);
                 //console.log(filestream);
                 
                 if(isThemeFile(filestream)){
@@ -206,8 +206,8 @@ function ReadThemeFile() {
                 }
                 let current_point = 5;
 
-                let finalPosforBase64 = filestream.readUint16LE(current_point);
-                current_point += 2;
+                let finalPosforBase64 = filestream.readUint32LE(current_point);
+                current_point += 4;
                 readFile.ThemeIcon = decoder.decode(filestream.subarray(current_point, finalPosforBase64));
                 current_point += finalPosforBase64;
                 

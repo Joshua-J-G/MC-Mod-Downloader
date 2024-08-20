@@ -1,8 +1,9 @@
-const {app, screen, BrowserWindow, Notification, globalShortcut} = require('electron');
-const Configs = require('./src/ConfigFileTemplates');
-const fs =  require('fs');
+const {app, screen, BrowserWindow, globalShortcut} = require('electron');
+
+
 const ThemeFile = require('./src/ThemeFile');
 const Settings = require('./src/OpenSettings');
+const {LoadConfig} = require('./src/OpenConfigFile');
 
 let themeHook;
 
@@ -43,24 +44,25 @@ const createWindow = () => {
         minHeight: HeightMin / primaryDisplay.scaleFactor,
         title:  "Flux Mod loader",
         frame: true
+        
     });
     
     const themes = ThemeFile.ReadThemeFile();
-    console.log(themes);
+    //console.log(themes);
     const currentTheme = themes.find((data) => data.ThemeName == UserConfigs.theme);
 
     //console.log(`Themes/${currentTheme.Folder}/Dark-${currentTheme.ThemeName}/intro.html`);
     if(currentTheme.Darkmode){
       if(UserConfigs.Darkmode){
-        win.loadFile(`Themes/${currentTheme.Folder}/Dark-${currentTheme.ThemeName}/intro.html`);
-        themeHook = require(`./Themes/${currentTheme.Folder}/Dark-${currentTheme.ThemeName}/intro.js`)
+        win.loadFile(`${__dirname}/Themes/${currentTheme.Folder}/Dark-${currentTheme.ThemeName}/intro.html`);
+        themeHook = require(`${__dirname}/Themes/${currentTheme.Folder}/Dark-${currentTheme.ThemeName}/intro.js`)
       }else{
-        win.loadFile(`Themes/${currentTheme.Folder}/Light-${currentTheme.ThemeName}/intro.html`);
-        themeHook = require(`./Themes/${currentTheme.Folder}/Light-${currentTheme.ThemeName}/intro.js`);
+        win.loadFile(`${__dirname}/Themes/${currentTheme.Folder}/Light-${currentTheme.ThemeName}/intro.html`);
+        themeHook = require(`${__dirname}/Themes/${currentTheme.Folder}/Light-${currentTheme.ThemeName}/intro.js`);
       }
     }else{
-      win.loadFile(`Themes/${currentTheme.Folder}/${currentTheme.ThemeName}/intro.html`);
-      themeHook = require(`./Themes/${currentTheme.Folder}/${currentTheme.ThemeName}/intro.html`);
+      win.loadFile(`${__dirname}/Themes/${currentTheme.Folder}/${currentTheme.ThemeName}/intro.html`);
+      themeHook = require(`${__dirname}/Themes/${currentTheme.Folder}/${currentTheme.ThemeName}/intro.js`);
     }
 
     this.CurrentTheme = currentTheme;
@@ -73,51 +75,18 @@ const createWindow = () => {
 
 
 
-const LoadConfig = () => {
-  if(!fs.existsSync('config/UserConfig.cfg')){
-    try { 
-      fs.mkdir('config', {recursive: true}, (err) => {
-        if (err) {
-          new Notification({
-            title: 'Directory Failed to Create',
-            body: `Program failed to Create Directory "config" \n ${err}`
-          }).show();
-        } 
-      });
-      fs.writeFileSync('config/UserConfig.cfg', JSON.stringify(Configs.userConfigs, null, 2), 'utf-8');
-    }catch(e) { 
-      new Notification({
-        title: 'File Failed to Create',
-        body: `the UserConfig.cfg File Failed to create \n do you have write permissions in this directory \n ${e}`
-      }).show();
-      UserConfigs = Configs.userConfigs;
-    }
-  }
+app.whenReady().then(() => {
 
-  try { UserConfigs = JSON.parse(fs.readFileSync('config/UserConfig.cfg', {encoding: 'utf-8', flag: 'r'}))} catch(e) { 
-    new Notification({
-      title: 'File Failed to Load UserConfigs',
-      body: `the UserConfig.cfg File Failed to create \n do you have write permissions in this directory \n ${e}`
-    }).show();
-    UserConfigs = Configs.userConfigs;
-  }
-
+  UserConfigs = LoadConfig();
   
-
-  console.log(UserConfigs);
-}
-
-
-
-
-app.whenReady().then(async () => {
-
-  LoadConfig();
-  createWindow();
-  //ThemeFile.constructor("Soda", "This is A Test Description For Your Enjoyment Have Fun", false, false, "URL WE DONT NEED NO URL WHERE WERE GOING");
- // await ThemeFile.SelectIcon();
+  //ThemeFile.constructor("Test File", "This is A Test Description For Your Enjoyment Have Fun", true, false, "URL WE DONT NEED NO URL WHERE WERE GOING");
+   //ThemeFile.SelectIcon();
 
   //ThemeFile.CreateThemeFile();
+
+
+
+  createWindow();
   const ret = globalShortcut.register('CommandOrControl+X', () => {
     Settings.OpenSettingsWindow(screen.getPrimaryDisplay(),registerNewWindow, mainWindow);
   })

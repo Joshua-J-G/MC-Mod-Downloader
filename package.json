@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"please fix me\" && exit 1"
+    "test": "echo \"please fix me\" && exit 1",
+    "build": "electron-packager ./ modLoader --platform=win32 --arch=x64 --overwrite"
   },
   "repository": {
     "type": "git",

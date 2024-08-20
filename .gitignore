@@ -42,6 +42,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+modLoader-win32-x64/
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -81,6 +82,7 @@ web_modules/
 .env.production.local
 .env.local
 
+modLoader-win32-x64/
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
